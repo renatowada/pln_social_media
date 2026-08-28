@@ -18,7 +18,7 @@ PROCESSED_DIR = os.path.join(BASE_DIR, 'data', 'processed')
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 
-# SCHEMA E LLM (Mantidos inalterados)
+# SCHEMA E LLM
 AspectosPermitidos = Literal[
     "Preço/Custo-Benefício", "Desempenho/Motor", "Consumo/Economia", 
     "Design/Estética", "Acabamento/Conforto", "Confiabilidade/Manutenção", 
@@ -42,14 +42,15 @@ llm = ChatGoogleGenerativeAI(
 
 system_bi = """
 ## Persona: Analista de Inteligência de Mercado Sênior especializado na Indústria Automotiva.
-Sua missão é traduzir comentários de redes sociais em métricas acionáveis para montadoras e concessionárias.
+Sua missão é extrair métricas acionáveis de comentários de redes sociais ESPECIFICAMENTE para um CARRO ALVO.
 
 REGRAS DE OURO PARA FILTRAGEM:
-1. DESCARTE (valor_comercial_produto = False): Piadas, memes, elogios ao canal, spam.
-2. APROVAÇÃO (valor_comercial_produto = True): Relatos reais, comparativos, opiniões fundamentadas.
-3. PADRONIZAÇÃO DE ASPECTOS: Escolha estritamente entre as opções fornecidas.
+1. DESCARTE IMEDIATO (valor_comercial_produto = False): Piadas, spam, OU comentários que falem exclusivamente de outras marcas/carros sem fazer nenhuma relação ou comparativo com o CARRO ALVO.
+2. APROVAÇÃO (valor_comercial_produto = True): Opiniões diretas sobre o CARRO ALVO, relatos de donos, ou comparativos onde o CARRO ALVO é mencionado frente aos concorrentes.
+3. PADRONIZAÇÃO: Escolha o aspecto estritamente entre as opções fornecidas.
 """
-human_bi = "Avalie o seguinte comentário sobre automóveis:\n{comentario}\n\n{format_instructions}"
+human_bi = "CARRO ALVO DA ANÁLISE: {modelo}\n\nAvalie o seguinte comentário:\n{comentario}\n\n{format_instructions}"
+
 prompt_bi = ChatPromptTemplate.from_messages([("system", system_bi), ("human", human_bi)]).partial(format_instructions=parser_bi.get_format_instructions())
 chain_bi = prompt_bi | llm | parser_bi
 
@@ -99,7 +100,7 @@ def executar_particao_gwm():
             tentativas = 0
             while not sucesso and tentativas < 3:
                 try:
-                    res = chain_bi.invoke({"comentario": texto})
+                    res = chain_bi.invoke({"modelo": nome_modelo.replace("_", " "), "comentario": texto})
                     resultados.append(res)
                     sucesso = True
                     print("   -> Sucesso.")
