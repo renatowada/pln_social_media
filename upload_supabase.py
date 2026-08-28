@@ -40,11 +40,11 @@ def enviar_para_supabase():
         return
 
 
-    print(" -> Escrevendo dados na tabela... (Isso pode levar alguns segundos)")
+    print(" -> Escrevendo dados na tabela...")
     try:
 
-        df_master.to_sql('avaliacoes_youtube', con=engine, if_exists='replace', index=False)
-        print("\n[SUCESSO] Todos os dados foram inseridos na tabela 'avaliacoes_youtube' no Supabase!")
+        df_master.to_sql('avaliacoes_comentarios', con=engine, if_exists='replace', index=False)
+        print("\n[SUCESSO] Todos os dados foram inseridos na tabela 'avaliacoes_comentarios' no Supabase!")
         
     except Exception as e:
         print(f"\n[ERRO] Falha durante a inserção de dados: {e}")
