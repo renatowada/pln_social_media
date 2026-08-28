@@ -11,7 +11,6 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 
-# Configuração de Caminhos
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 RAW_DIR = os.path.join(BASE_DIR, 'data', 'raw')
 PROCESSED_DIR = os.path.join(BASE_DIR, 'data', 'processed')
@@ -19,7 +18,6 @@ PROCESSED_DIR = os.path.join(BASE_DIR, 'data', 'processed')
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 
-# SCHEMA DE SAÍDA (Pydantic & Enums Restritos)
 AspectosPermitidos = Literal[
     "Preço/Custo-Benefício", "Desempenho/Motor", "Consumo/Economia", 
     "Design/Estética", "Acabamento/Conforto", "Confiabilidade/Manutenção", 
@@ -60,34 +58,22 @@ llm = ChatGoogleGenerativeAI(
 
 
 # SYSTEM PROMPT
-
 system_bi = """
 ## Persona: Analista de Inteligência de Mercado Sênior especializado na Indústria Automotiva.
-Sua missão é traduzir comentários de redes sociais em métricas acionáveis para montadoras e concessionárias.
+Sua missão é extrair métricas acionáveis de comentários de redes sociais ESPECIFICAMENTE para um CARRO ALVO.
 
 REGRAS DE OURO PARA FILTRAGEM:
-1. DESCARTE (valor_comercial_produto = False):
-   - Piadas, memes ou sarcasmo genérico (ex: "comprar elétrico pra fugir de gasolina adulterada").
-   - Elogios/críticas ao criador do vídeo ou canal (ex: "ótimo vídeo", "inscrição feita").
-   - Publicidade de produtos de terceiros, cupons ou links de afiliados.
-2. APROVAÇÃO (valor_comercial_produto = True):
-   - Relatos reais de donos/test-drives sobre durabilidade, consumo, suspensão, acabamento ou preço.
-   - Comparativos diretos entre modelos e opiniões fundamentadas sobre a compra.
-3. PADRONIZAÇÃO DE ASPECTOS: Escolha estritamente entre [Preço/Custo-Benefício, Desempenho/Motor, Consumo/Economia, Design/Estética, Acabamento/Conforto, Confiabilidade/Manutenção, Comparativo Concorrentes, Geral].
+1. DESCARTE IMEDIATO (valor_comercial_produto = False): Piadas, spam, OU comentários que falem exclusivamente de outras marcas/carros sem fazer nenhuma relação ou comparativo com o CARRO ALVO.
+2. APROVAÇÃO (valor_comercial_produto = True): Opiniões diretas sobre o CARRO ALVO, relatos de donos, ou comparativos onde o CARRO ALVO é mencionado frente aos concorrentes.
+3. PADRONIZAÇÃO: Escolha o aspecto estritamente entre as opções fornecidas.
 """
+human_bi = "CARRO ALVO DA ANÁLISE: {modelo}\n\nAvalie o seguinte comentário:\n{comentario}\n\n{format_instructions}"
 
-human_bi = "Avalie o seguinte comentário sobre automóveis:\n{comentario}\n\n{format_instructions}"
-
-prompt_bi = ChatPromptTemplate.from_messages([
-    ("system", system_bi),
-    ("human", human_bi),
-]).partial(format_instructions=parser_bi.get_format_instructions())
-
+prompt_bi = ChatPromptTemplate.from_messages([("system", system_bi), ("human", human_bi)]).partial(format_instructions=parser_bi.get_format_instructions())
 chain_bi = prompt_bi | llm | parser_bi
 
 
 # PIPELINE DE PROCESSAMENTO
-
 def processar_comentarios_modelo(nome_modelo: str, batch_size: int = 50, min_likes: int = 50):
     input_path = os.path.join(RAW_DIR, f"yt_raw_{nome_modelo}.parquet")
     output_path = os.path.join(PROCESSED_DIR, f"yt_{nome_modelo}_processed.parquet")
@@ -133,7 +119,11 @@ def processar_comentarios_modelo(nome_modelo: str, batch_size: int = 50, min_lik
 
             while not sucesso and tentativas < 3:
                 try:
-                    res = chain_bi.invoke({"comentario": texto})
+                    res = chain_bi.invoke({
+                        "modelo": nome_modelo.replace("_", " "), 
+                        "comentario": texto
+                    })
+                    
                     if isinstance(res, dict):
                         resultados.append(res)
                         sucesso = True
