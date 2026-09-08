@@ -44,7 +44,7 @@ A hipótese de que o comportamento do usuário afeta a densidade do dado foi com
 
 A aplicação do pipeline de IA revelou um retrato cristalino e matematicamente embasado sobre a aceitação dos veículos elétricos (EVs) no Brasil. O processamento reduziu **18.408** comentários brutos a **448** *insights* de alto valor (representando **28.424 interações/likes**), provando a inviabilidade da análise manual e o altíssimo ROI da Inteligência Artificial em *Social Listening*.
 
-![Dashboard Visão Geral](imagens_melhoradas/overall.PNG)
+![Dashboard Visão Geral](images_melhoradas/overall.PNG)
 
 Os dados consolidados no painel revelam o comportamento do consumidor em três eixos principais:
 
@@ -55,17 +55,17 @@ O comparativo de *Net Sentiment Score (NSS)* divide o mercado brasileiro em duas
 
 ### 2. Dores e Trunfos Universais do Mercado
 Ao cruzar a polaridade (Positivo/Negativo) pelos aspectos automotivos predefinidos, identificou-se um padrão que transcende as marcas:
-* 🚨 **A Dor Universal (Confiabilidade/Manutenção):** Este é o maior gargalo do setor. Mesmo em modelos bem avaliados, o consumidor brasileiro expressa forte ceticismo e medo quanto ao pós-venda, disponibilidade de peças e durabilidade de marcas estreantes.
-* ⭐ **O Trunfo (Desempenho e Geral):** Aspectos ligados à motorização (torque instantâneo) e à experiência geral com a dirigibilidade do EV são majoritariamente positivos, indicando que a principal barreira de adoção do público é mercadológica (medo, preço), e não técnica (a dirigibilidade do EV).
+* 🚨 **A Dor Universal (Confiabilidade/Manutenção):** Este é o maior gargalo do setor. Mesmo em modelos bem avaliados, o consumidor brasileiro expressa forte ceticismo e medo quanto ao **pós-venda, disponibilidade de peças e durabilidade** de marcas estreantes.
+* ⭐ **O Trunfo (Desempenho e Geral):** Aspectos ligados à motorização (torque instantâneo) e à experiência geral com a dirigibilidade do EV são majoritariamente positivos, indicando que **a principal barreira de adoção do público é mercadológica (medo, preço), e não técnica (a dirigibilidade do EV)**.
 
 ### 3. Diagnóstico Micro (Performance por Modelo)
 
 <details>
-<summary><b>🟢 Geely EX2 (A Surpresa Positiva) | NSS: +32,14%</b></summary>
+<summary><b>🟢 Geely EX2 (Destaque em Desempenho e Satisfação) | NSS: +32,14%</b></summary>
 <br>
-Lidera o ranking de reputação. Seus pontos fortes absolutos são o <i>Desempenho/Motor</i> e a satisfação <i>Geral</i>, que conseguiram anular com folga sua principal crítica identificada: o <i>Acabamento/Conforto</i>.
+Lidera o ranking de reputação. Seus pontos fortes são o <i>Desempenho/Motor</i> e a satisfação <i>Geral</i>, que conseguiram anular sua principal crítica identificada: o <i>Acabamento/Conforto</i>.
 <br><br>
-<img src="imagens_melhoradas/ex2_overall.PNG" alt="Dashboard Geely EX2" width="800">
+<img src="images_melhoradas/ex2_overall.PNG" alt="Dashboard Geely EX2" width="800">
 </details>
 
 <details>
@@ -73,23 +73,23 @@ Lidera o ranking de reputação. Seus pontos fortes absolutos são o <i>Desempen
 <br>
 O aspecto dominante nas discussões é o <i>Design/Estética</i>, com uma divisão acirrada de sentimentos (quase 50/50). Os dados refletem um carro de nicho e personalidade visual forte, focado em um público específico.
 <br><br>
-<img src="imagens_melhoradas/ora3_overall.PNG" alt="Dashboard GWM Ora 03" width="800">
+<img src="images_melhoradas/ora3_overall.PNG" alt="Dashboard GWM Ora 03" width="800">
 </details>
 
 <details>
 <summary><b>🟢 BYD Dolphin Mini (O Campeão de Engajamento) | NSS: +14,85%</b></summary>
 <br>
-Com mais de 15 mil *likes* validados, domina o <i>Share of Voice</i>. O principal motivador de engajamento é o <i>Preço/Custo-Benefício</i>, majoritariamente positivo. A estratégia agressiva de precificação refletiu perfeitamente na percepção do público digital.
+Com mais de 15 mil <i>likes<i> validados, domina o <i>Share of Voice</i>. O principal motivador de engajamento é o <i>Preço/Custo-Benefício</i>, majoritariamente positivo. A estratégia agressiva de precificação refletiu positivamente na percepção do público digital.
 <br><br>
-<img src="imagens_melhoradas/dolphin_mini_overall.PNG" alt="Dashboard BYD Dolphin Mini" width="800">
+<img src="images_melhoradas/dolphin_mini_overall.PNG" alt="Dashboard BYD Dolphin Mini" width="800">
 </details>
 
 <details>
 <summary><b>🔴 Renault Kwid E-Tech (A Queda do Pioneiro) | NSS: -24,17%</b></summary>
 <br>
-Além de sofrer nos comparativos diretos, apresenta surpreendente rejeição no quesito <i>Consumo/Economia</i>. A autonomia e a entrega real do veículo frustram as expectativas quando pareadas aos novos padrões das marcas asiáticas.
+Além de sofrer nos comparativos diretos, apresenta forte rejeição no quesito <i>Consumo/Economia</i>. A autonomia e a entrega real do veículo frustram as expectativas quando pareadas aos novos padrões das marcas asiáticas.
 <br><br>
-<img src="imagens_melhoradas/etech_overall.PNG" alt="Dashboard Renault Kwid E-Tech" width="800">
+<img src="images_melhoradas/etech_overall.PNG" alt="Dashboard Renault Kwid E-Tech" width="800">
 </details>
 
 <details>
@@ -97,7 +97,7 @@ Além de sofrer nos comparativos diretos, apresenta surpreendente rejeição no 
 <br>
 Amarga o pior NSS da base. O modelo foi massivamente rejeitado em <i>Design</i>, <i>Acabamento</i> e <i>Comparativos</i> (100% negativos na amostragem retida).
 <br><br>
-<img src="imagens_melhoradas/ejs1_overall.PNG" alt="Dashboard JAC E-JS1" width="800">
+<img src="images_melhoradas/ejs1_overall.PNG" alt="Dashboard JAC E-JS1" width="800">
 </details>
 
 <br>
