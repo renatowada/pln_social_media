@@ -102,9 +102,9 @@ def salvar_dados_modelo(df: pd.DataFrame, nome_modelo: str, diretorio_destino: s
 # EXECUÇÃO PRINCIPAL
 if __name__ == "__main__":
     if not API_KEY:
-        print("[ERRO] Chave YOUTUBE_API_KEY não encontrada no arquivo .env!")
+        print("[ERRO] Chave YOUTUBE_API_KEY não encontrada")
     else:
-        print("Iniciando pipeline de extração por modelo...\n")
+        print("Iniciando pipeline de extração\n")
         
         for modelo, lista_videos in VIDEOS_POR_MODELO.items():
             print(f"=== Processando Modelo: {modelo} ===")
