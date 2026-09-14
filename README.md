@@ -107,6 +107,17 @@ Amarga o pior NSS da base. O modelo foi massivamente rejeitado em <i>Design</i> 
 Os dados comprovam que a nova geração de EVs chineses elevou o padrão de exigência no Brasil, punindo modelos defasados. Para as montadoras líderes (BYD, GWM e Geely) consolidarem o domínio, o investimento primário em marketing e operações não deve ser no produto em si, mas em campanhas agressivas de desmistificação de **Garantia, Pós-Venda e Disponibilidade de Peças**, quebrando a última grande objeção (Confiabilidade) apontada pelos dados.
 
 
+### 🧮 A Matemática do Negócio: Como o Net Sentiment Score (NSS) é Calculado?
+
+O **Net Sentiment Score (NSS)** é a métrica de central deste painel, adaptada da lógica do NPS (*Net Promoter Score*) para o contexto de *Social Listening*. Ele consolida a percepção de mercado em um único indicador direcional, utilizando a seguinte fórmula matemática:
+
+$$NSS = \left( \frac{\text{Avaliações Positivas} - \text{Avaliações Negativas}}{\text{Total de Avaliações Validadas}} \right) \times 100$$
+
+**Como interpretar a engenharia da métrica:**
+* **O Papel da Neutralidade:** Comentários classificados como "Neutros" não somam ao numerador, mas compõem o denominador (*Total*). Estrategicamente, isso significa que um alto volume de opiniões ambíguas ou neutras atua como um "diluidor", puxando o NSS em direção a 0%, mas **nunca inverte a polaridade real da marca** (de positivo para negativo).
+* **Escala de Avaliação:** Um NSS $> 0\%$ indica que o volume de defensores do produto supera os detratores. O Geely EX2, com $+32\%$, demonstra uma tração comercial excelente, enquanto os $-48\%$ do JAC E-JS1 configuram um cenário de rejeição crítica.
+
+
 ## 🚧 Limitações e Escopo Analítico
 
 A estruturação de projetos de Inteligência Artificial requer a clareza de suas delimitações metodológicas:
