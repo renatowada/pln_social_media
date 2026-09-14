@@ -35,7 +35,7 @@ Para garantir a qualidade analítica e evitar vieses estatísticos, regras estri
 
 ## ⚠️ Aviso Legal e Escopo Analítico (Disclaimer)
 
-Para garantir a total transparência metodológica e evitar correlações espúrias, este projeto é regido pelas seguintes premissas:
+Para garantir a total transparência metodológica e evitar correlações errôneas, este projeto é regido pelas seguintes premissas:
 
 * **Natureza do Projeto:** Esta é uma Prova de Conceito (PoC) independente, desenvolvida estritamente para fins de pesquisa em Engenharia de Dados, aplicação de LLMs (Inteligência Artificial) e composição de portfólio profissional. Não há qualquer afiliação, patrocínio ou vínculo com as montadoras citadas.
 * **Percepção vs. Conversão (O Limite do Dado):** O *Net Sentiment Score (NSS)* e as volumetrias aqui apresentadas refletem exclusivamente a **reputação digital e o *Share of Voice*** do recorte analisado. Estes indicadores não devem ser utilizados como *proxy* ou justificativa direta para estimar volumes de vendas, emplacamentos oficiais ou sucesso comercial de nenhum dos veículos.
@@ -45,10 +45,10 @@ Para garantir a total transparência metodológica e evitar correlações espúr
 
 ## 📊 Resultados do Funil de IA e Ponderação de Fontes
 
-A hipótese de que o comportamento do usuário afeta a densidade do dado foi comprovada na conversão do funil (`gerar_relatorio_funil.py`):
+A hipótese de que o comportamento do usuário afeta a densidade do dado foi comprovada na conversão do funil:
 
 * **YouTube (Escala de Consenso):** A taxa de utilidade oscilou entre 0,4% e 0,6%, evidenciando a alta dispersão temática da plataforma. Contudo, a exigência de $\ge$ 50 curtidas atuou como um multiplicador: os poucos comentários mantidos representam o consenso direto de dezenas ou centenas de consumidores que interagiram com a mensagem.
-* **Reddit (Alta Profundidade):** A taxa de retenção variou de 17% a 51,7%, confirmando que os fóruns entregam altíssima densidade de inteligência comercial por texto. O anonimato reduz a pressão, favorecendo o detalhamento técnico e a validação por pares (*upvotes*).
+* **Reddit (Alta Profundidade):** A taxa de retenção variou de 17% a 51,7%, confirmando que os fóruns entregam altíssima densidade de inteligência comercial por texto. O anonimato reduz a pressão, favorecendo o detalhamento técnico e a validação por pares.
 
 
 ## 📈 Resultados de Negócio e Conclusões
