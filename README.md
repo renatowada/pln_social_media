@@ -12,7 +12,7 @@
 
 
 ## 📌 Visão Geral do Projeto
-Este projeto é uma Prova de Conceito (PoC) de **Inteligência de Mercado** focada no setor de Veículos Elétricos (EVs) no Brasil. O objetivo é transformar dados não estruturados de redes sociais em *insights* acionáveis para montadoras e concessionárias, identificando exatamente quais aspectos (Preço, Acabamento, Desempenho, Consumo, Design, Manutenção, Comparativo aos concorrentes e Sentimento geral) são mais elogiados ou criticados pelos consumidores frente aos concorrentes diretos.
+Este projeto é uma Prova de Conceito (PoC) de **Inteligência de Mercado** focada no setor de Veículos Elétricos (EVs) no Brasil, com escopo delimitado especificamente para os **modelos elétricos de entrada (sub-R$ 150 mil) e seus concorrentes diretos**. O objetivo é transformar dados não estruturados de redes sociais em *insights* acionáveis para montadoras e concessionárias, identificando exatamente quais aspectos (Preço, Acabamento, Desempenho, Consumo, Design, Manutenção, Comparativo aos concorrentes e Sentimento geral) são mais elogiados ou criticados pelos consumidores frente ao mercado.
 
 
 ## 🏗️ Arquitetura da Solução
@@ -33,12 +33,22 @@ Para garantir a qualidade analítica e evitar vieses estatísticos, regras estri
 * **Governança (`consolidar_dados.py` e `upload_supabase.py`):** Concatenação forçando a integridade do esquema, injeção de metadados da fonte e sobrescrita de tabelas fato no PostgreSQL.
 
 
+## ⚠️ Aviso Legal e Escopo Analítico (Disclaimer)
+
+Para garantir a total transparência metodológica e evitar correlações errôneas, este projeto é regido pelas seguintes premissas:
+
+* **Natureza do Projeto:** Esta é uma Prova de Conceito (PoC) independente, desenvolvida estritamente para fins de pesquisa em Engenharia de Dados, aplicação de LLMs (Inteligência Artificial) e composição de portfólio profissional. Não há qualquer afiliação, patrocínio ou vínculo com as montadoras citadas.
+* **Percepção vs. Conversão (O Limite do Dado):** O *Net Sentiment Score (NSS)* e as volumetrias aqui apresentadas refletem exclusivamente a **reputação digital e o *Share of Voice*** do recorte analisado. Estes indicadores não devem ser utilizados como *proxy* ou justificativa direta para estimar volumes de vendas, emplacamentos oficiais ou sucesso comercial de nenhum dos veículos.
+* **Auditoria Qualitativa (Human-in-the-Loop):** Como o julgamento de LLMs é probabilístico, realizou-se uma amostragem auditada manualmente (50 registros da camada Gold). O modelo obteve uma **precisão de 82%**. Os Falsos Positivos retidos concentraram-se majoritariamente na categoria de sentimento **NEUTRO**, o que atenua o impacto no cálculo do NSS e mantém a polaridade comparativa protegida contra distorções.
+* **Gestão de Viabilidade (Exclusão do Instagram):** Testes na fase de Extração revelaram forte bloqueio anti-scraping (limite de paginação) no Instagram. Para evitar arquiteturas frágeis, risco de banimento de contas (*shadowban*) e mitigar o viés de obsolescência temporal de postagens antigas (*Data Decay*), a plataforma foi intencionalmente removida do escopo.
+
+
 ## 📊 Resultados do Funil de IA e Ponderação de Fontes
 
-A hipótese de que o comportamento do usuário afeta a densidade do dado foi comprovada na conversão do funil (`gerar_relatorio_funil.py`):
+A hipótese de que o comportamento do usuário afeta a densidade do dado foi comprovada na conversão do funil:
 
 * **YouTube (Escala de Consenso):** A taxa de utilidade oscilou entre 0,4% e 0,6%, evidenciando a alta dispersão temática da plataforma. Contudo, a exigência de $\ge$ 50 curtidas atuou como um multiplicador: os poucos comentários mantidos representam o consenso direto de dezenas ou centenas de consumidores que interagiram com a mensagem.
-* **Reddit (Alta Profundidade):** A taxa de retenção variou de 17% a 51,7%, confirmando que os fóruns entregam altíssima densidade de inteligência comercial por texto. O anonimato reduz a pressão, favorecendo o detalhamento técnico e a validação por pares (*upvotes*).
+* **Reddit (Alta Profundidade):** A taxa de retenção variou de 17% a 51,7%, confirmando que os fóruns entregam altíssima densidade de inteligência comercial por texto. O anonimato reduz a pressão, favorecendo o detalhamento técnico e a validação por pares.
 
 
 ## 📈 Resultados de Negócio e Conclusões
@@ -103,16 +113,19 @@ Amarga o pior NSS da base. O modelo foi massivamente rejeitado em <i>Design</i> 
 
 <br>
 
+
+### 🧮 A Matemática do Negócio: Como o Net Sentiment Score (NSS) é Calculado?
+
+O **Net Sentiment Score (NSS)** é a métrica de central deste painel, adaptada da lógica do NPS (*Net Promoter Score*) para o contexto de *Social Listening*. Ele consolida a percepção de mercado em um único indicador direcional, utilizando a seguinte fórmula matemática:
+
+$$NSS = \left( \frac{\text{Avaliações Positivas} - \text{Avaliações Negativas}}{\text{Total de Avaliações Validadas}} \right) \times 100$$
+
+**Como interpretar a engenharia da métrica:**
+* **O Papel da Neutralidade:** Comentários classificados como "Neutros" não somam ao numerador, mas compõem o denominador (*Total*). Estrategicamente, isso significa que um alto volume de opiniões ambíguas ou neutras atua como um "diluidor", puxando o NSS em direção a 0%, mas **nunca inverte a polaridade real da marca** (de positivo para negativo).
+* **Escala de Avaliação:** Um NSS $> 0\%$ indica que o volume de defensores do produto supera os detratores. O Geely EX2, com $+32\%$, demonstra uma tração comercial excelente, enquanto os $-48\%$ do JAC E-JS1 configuram um cenário de rejeição crítica.
+
+
+
 ### 🎯 Conclusão Estratégica (Actionable Insight)
-Os dados comprovam que a nova geração de EVs chineses elevou o padrão de exigência no Brasil, punindo modelos defasados. Para as montadoras líderes (BYD, GWM e Geely) consolidarem o domínio, o investimento primário em marketing e operações não deve ser no produto em si, mas em campanhas agressivas de desmistificação de **Garantia, Pós-Venda e Disponibilidade de Peças**, quebrando a última grande objeção (Confiabilidade) apontada pelos dados.
-
-
-## 🚧 Limitações e Escopo Analítico
-
-A estruturação de projetos de Inteligência Artificial requer a clareza de suas delimitações metodológicas:
-
-* **Auditoria Qualitativa (Human-in-the-Loop):** Para validar a assertividade da IA sem um gabarito prévio, realizou-se uma amostragem auditada manualmente (50 registros da camada Gold). O modelo obteve uma **precisão de 82%**.
-* **Padrão de Erro Identificado (Neutral Drift):** Os Falsos Positivos retidos pela IA concentraram-se majoritariamente na categoria de sentimento **NEUTRO**. Isso atenua o impacto no cálculo do *NSS*, mantendo a polaridade e o saldo comparativo protegidos contra distorções nas métricas positivas e negativas.
-* **Isolamento de Escopo (Percepção vs. Conversão):** Este painel mede a reputação digital. O *NSS* e os volumes de engajamento não devem ser utilizados como representação direta para estimar volumes de emplacamentos comerciais.
-* **Gestão de Viabilidade (Exclusão do Instagram):** Durante a fase de extração, testes revelaram forte bloqueio anti-scraping (limite de paginação) no Instagram. Para evitar scripts frágeis, risco de *shadowban* e mitigar o viés de obsolescência temporal de postagens antigas, a plataforma foi removida do escopo final.
-* **Viés Analítico e Pesos Matemáticos:** Optou-se por não atribuir multiplicadores numéricos arbitrários baseados na origem do dado (YouTube vs Reddit) para não destruir a integridade estatística da amostra. O rastreamento da linhagem (`fonte_dados`) no modelo relacional garante a correta segmentação contextual.
+Os dados comprovam que a nova geração de EVs chineses elevou o padrão de exigência no Brasil, punindo modelos defasados. 
+Para as montadoras líderes (BYD, GWM e Geely) consolidarem o domínio, o investimento primário em marketing e operações não deve ser no produto em si, mas em campanhas agressivas de desmistificação de **Garantia, Pós-Venda e Disponibilidade de Peças**, quebrando a última grande objeção (Confiabilidade) apontada pelos dados.
