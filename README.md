@@ -12,7 +12,7 @@
 
 
 ## 📌 Visão Geral do Projeto
-Este projeto é uma Prova de Conceito (PoC) de **Inteligência de Mercado** focada no setor de Veículos Elétricos (EVs) no Brasil. O objetivo é transformar dados não estruturados de redes sociais em *insights* acionáveis para montadoras e concessionárias, identificando exatamente quais aspectos (Preço, Acabamento, Desempenho, Consumo, Design, Manutenção, Comparativo aos concorrentes e Sentimento geral) são mais elogiados ou criticados pelos consumidores frente aos concorrentes diretos.
+Este projeto é uma Prova de Conceito (PoC) de **Inteligência de Mercado** focada no setor de Veículos Elétricos (EVs) no Brasil, com escopo delimitado especificamente para os **modelos elétricos de entrada (sub-R$ 150 mil) e seus concorrentes diretos**. O objetivo é transformar dados não estruturados de redes sociais em *insights* acionáveis para montadoras e concessionárias, identificando exatamente quais aspectos (Preço, Acabamento, Desempenho, Consumo, Design, Manutenção, Comparativo aos concorrentes e Sentimento geral) são mais elogiados ou criticados pelos consumidores frente ao mercado.
 
 
 ## 🏗️ Arquitetura da Solução
@@ -31,6 +31,16 @@ Para garantir a qualidade analítica e evitar vieses estatísticos, regras estri
 * **Estratégia de Coleta (`extract_youtube.py` e Apify):** Extração dos vídeos mais relevantes de 5 modelos de EVs no YouTube, focando estritamente em comentários principais com $\ge$ 50 curtidas. O Reddit foi incorporado via Apify (filtro de $\ge$ 1 curtida) após restrições da API oficial, garantindo alta pertinência técnica de fóruns.
 * **Filtros e Rate Limits (`preprocess_comments_yt.py` e `preprocess_comments_reddit.py`):** Validação rigorosa via IA para garantir que o texto possuísse valor comercial e fizesse referência explícita ao carro alvo, categorizando os resultados em 8 aspectos automotivos.
 * **Governança (`consolidar_dados.py` e `upload_supabase.py`):** Concatenação forçando a integridade do esquema, injeção de metadados da fonte e sobrescrita de tabelas fato no PostgreSQL.
+
+
+## ⚠️ Aviso Legal e Escopo Analítico (Disclaimer)
+
+Para garantir a total transparência metodológica e evitar correlações espúrias, este projeto é regido pelas seguintes premissas:
+
+* **Natureza do Projeto:** Esta é uma Prova de Conceito (PoC) independente, desenvolvida estritamente para fins de pesquisa em Engenharia de Dados, aplicação de LLMs (Inteligência Artificial) e composição de portfólio profissional. Não há qualquer afiliação, patrocínio ou vínculo com as montadoras citadas.
+* **Percepção vs. Conversão (O Limite do Dado):** O *Net Sentiment Score (NSS)* e as volumetrias aqui apresentadas refletem exclusivamente a **reputação digital e o *Share of Voice*** do recorte analisado. Estes indicadores não devem ser utilizados como *proxy* ou justificativa direta para estimar volumes de vendas, emplacamentos oficiais ou sucesso comercial de nenhum dos veículos.
+* **Auditoria Qualitativa (Human-in-the-Loop):** Como o julgamento de LLMs é probabilístico, realizou-se uma amostragem auditada manualmente (50 registros da camada Gold). O modelo obteve uma **precisão de 82%**. Os Falsos Positivos retidos concentraram-se majoritariamente na categoria de sentimento **NEUTRO**, o que atenua o impacto no cálculo do NSS e mantém a polaridade comparativa protegida contra distorções.
+* **Gestão de Viabilidade (Exclusão do Instagram):** Testes na fase de Extração revelaram forte bloqueio anti-scraping (limite de paginação) no Instagram. Para evitar arquiteturas frágeis, risco de banimento de contas (*shadowban*) e mitigar o viés de obsolescência temporal de postagens antigas (*Data Decay*), a plataforma foi intencionalmente removida do escopo.
 
 
 ## 📊 Resultados do Funil de IA e Ponderação de Fontes
@@ -103,9 +113,6 @@ Amarga o pior NSS da base. O modelo foi massivamente rejeitado em <i>Design</i> 
 
 <br>
 
-### 🎯 Conclusão Estratégica (Actionable Insight)
-Os dados comprovam que a nova geração de EVs chineses elevou o padrão de exigência no Brasil, punindo modelos defasados. Para as montadoras líderes (BYD, GWM e Geely) consolidarem o domínio, o investimento primário em marketing e operações não deve ser no produto em si, mas em campanhas agressivas de desmistificação de **Garantia, Pós-Venda e Disponibilidade de Peças**, quebrando a última grande objeção (Confiabilidade) apontada pelos dados.
-
 
 ### 🧮 A Matemática do Negócio: Como o Net Sentiment Score (NSS) é Calculado?
 
@@ -118,12 +125,7 @@ $$NSS = \left( \frac{\text{Avaliações Positivas} - \text{Avaliações Negativa
 * **Escala de Avaliação:** Um NSS $> 0\%$ indica que o volume de defensores do produto supera os detratores. O Geely EX2, com $+32\%$, demonstra uma tração comercial excelente, enquanto os $-48\%$ do JAC E-JS1 configuram um cenário de rejeição crítica.
 
 
-## 🚧 Limitações e Escopo Analítico
 
-A estruturação de projetos de Inteligência Artificial requer a clareza de suas delimitações metodológicas:
-
-* **Auditoria Qualitativa (Human-in-the-Loop):** Para validar a assertividade da IA sem um gabarito prévio, realizou-se uma amostragem auditada manualmente (50 registros da camada Gold). O modelo obteve uma **precisão de 82%**.
-* **Padrão de Erro Identificado (Neutral Drift):** Os Falsos Positivos retidos pela IA concentraram-se majoritariamente na categoria de sentimento **NEUTRO**. Isso atenua o impacto no cálculo do *NSS*, mantendo a polaridade e o saldo comparativo protegidos contra distorções nas métricas positivas e negativas.
-* **Isolamento de Escopo (Percepção vs. Conversão):** Este painel mede a reputação digital. O *NSS* e os volumes de engajamento não devem ser utilizados como representação direta para estimar volumes de emplacamentos comerciais.
-* **Gestão de Viabilidade (Exclusão do Instagram):** Durante a fase de extração, testes revelaram forte bloqueio anti-scraping (limite de paginação) no Instagram. Para evitar scripts frágeis, risco de *shadowban* e mitigar o viés de obsolescência temporal de postagens antigas, a plataforma foi removida do escopo final.
-* **Viés Analítico e Pesos Matemáticos:** Optou-se por não atribuir multiplicadores numéricos arbitrários baseados na origem do dado (YouTube vs Reddit) para não destruir a integridade estatística da amostra. O rastreamento da linhagem (`fonte_dados`) no modelo relacional garante a correta segmentação contextual.
+### 🎯 Conclusão Estratégica (Actionable Insight)
+Os dados comprovam que a nova geração de EVs chineses elevou o padrão de exigência no Brasil, punindo modelos defasados. 
+Para as montadoras líderes (BYD, GWM e Geely) consolidarem o domínio, o investimento primário em marketing e operações não deve ser no produto em si, mas em campanhas agressivas de desmistificação de **Garantia, Pós-Venda e Disponibilidade de Peças**, quebrando a última grande objeção (Confiabilidade) apontada pelos dados.
